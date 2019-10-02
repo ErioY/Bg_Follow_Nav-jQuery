@@ -1,0 +1,101 @@
+<!--
+ * @Autor: ErioY
+ * @Date: 2019-10-01 10:29:18
+ * @Email: 1973545559@qq.com
+ * @Github: https://github.com/ErioY
+ * @LastEditors: ErioY
+ * @LastEditTime: 2019-10-01 11:12:33
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        border-bottom: 2px #009fe9 solid;
+        overflow: hidden;
+        width: 700px;
+        position: relative;
+    }
+    li:not(#bg) {
+        width: 140px;
+        height: 50px;
+        float: left;
+    }
+    a {
+        text-decoration: none;
+        color: #000;
+        display: block;
+        height: 50px;
+        font-size: 30px;
+        text-align: center;
+        line-height: 50px;
+        /* 切换 a时的动画 */
+        transition: all linear 0.3s;
+    }
+    li#bg {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 140px;
+        height: 50px;
+        z-index: -1;
+        background: #009fe9;
+    }
+    a.active {
+        color: #fff;
+    }
+    </style>
+</head>
+<body>
+    <ul>
+        <li><a href="#" class="active">TAB1</a></li>
+        <li><a href="#">TAB2</a></li>
+        <li><a href="#">TAB3</a></li>
+        <li><a href="#">TAB4</a></li>
+        <li><a href="#">TAB5</a></li>
+        <li id="bg"></li>
+    </ul>
+    <script src = "jquery-1.10.1.min.js"></script>
+    <script src = "velocity.min.js"></script>
+    <script>
+    var timer = null;
+    $("a").mouseover(function () {
+        // 关闭延时定时器
+        clearTimeout(timer);
+        $("a").removeClass("active");
+        $(this).addClass("active");
+        // console.log(aLeft);
+        $("#bg").velocity({
+            "left": $(this).position().left
+        }, {
+            duration: 300,
+            easing: [1000, 40]
+        });
+    });
+    
+    $("ul").mouseout(function () {
+        $("a").removeClass("active");
+        $("a").eq(0).addClass("active");
+        // 鼠标移出ul时开启延时定时器
+        timer = setTimeout(function () {
+            $("#bg").velocity({
+                "left": 0
+            }, {
+                duration: 300,
+                easing: [1000, 40]
+            });
+        }, 30);
+        
+    });
+    </script>
+</body>
+</html>
